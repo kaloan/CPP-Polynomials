@@ -1,0 +1,21 @@
+﻿  main.cpp
+d:\programming\c++\cpp-polynomials\cpp-polynomials\polynomial.cpp(34): warning C4552: '>>': result of expression not used
+  d:\programming\c++\cpp-polynomials\cpp-polynomials\polynomial.cpp(63): note: see reference to function template instantiation 'ValC iter_pow<ValC>(ValC,unsigned int)' being compiled
+          with
+          [
+              ValC=int
+          ]
+  d:\programming\c++\cpp-polynomials\cpp-polynomials\polynomial.cpp(56): note: while compiling class template member function 'ValC Polynomial<int,ValC>::at(const ValC &) noexcept const'
+          with
+          [
+              ValC=int
+          ]
+  d:\programming\c++\cpp-polynomials\cpp-polynomials\main.cpp(15): note: see reference to function template instantiation 'ValC Polynomial<int,ValC>::at(const ValC &) noexcept const' being compiled
+          with
+          [
+              ValC=int
+          ]
+  d:\programming\c++\cpp-polynomials\cpp-polynomials\main.cpp(12): note: see reference to class template instantiation 'Polynomial<int,int>' being compiled
+  Polynomial.cpp
+  Generating Code...
+  CPP-Polynomials.vcxproj -> D:\Programming\C++\CPP-Polynomials\x64\Debug\CPP-Polynomials.exe
