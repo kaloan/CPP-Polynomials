@@ -32,13 +32,13 @@ ValC iter_pow(ValC base, unsigned int exponent)
 }
 
 template<class CoefC, class ValC>
-std::map<unsigned int, CoefC> Polynomial<CoefC, ValC>::getCoeffs() const noexcept
+inline std::map<unsigned int, CoefC> Polynomial<CoefC, ValC>::getCoeffs() const noexcept
 {
 	return std::map<unsigned int, CoefC>(coeffs);
 }
 
 template<class CoefC, class ValC>
-constexpr CoefC Polynomial<CoefC, ValC>::coeffOfPow(const unsigned int& pow) const
+inline constexpr CoefC Polynomial<CoefC, ValC>::coeffOfPow(const unsigned int& pow) const
 {
 	// TODO: insert return statement here
 	return coeffs.at(pow);
@@ -74,7 +74,7 @@ void Polynomial<CoefC, ValC>::print() const noexcept
 }
 
 template<class CoefC, class ValC>
-constexpr CoefC & Polynomial<CoefC, ValC>::operator[](const unsigned int &pow)
+inline constexpr CoefC & Polynomial<CoefC, ValC>::operator[](const unsigned int &pow)
 {
 	return coeffs[pow];
 }
