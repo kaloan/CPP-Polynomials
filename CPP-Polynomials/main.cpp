@@ -18,11 +18,23 @@ int main()
 	{
 		cout << "Pow " << c.first << ": " << c.second << endl;
 	}
+
 	intPoly.print();
 
 	cout << intPoly.coeffOfPow(2) << endl;
-	//The following would throw exception:
+	//The following would throw exception
 	//cout << intPoly.coeffOfPow(5) << endl;
+	
+	cout << "Is p full coefficients? " << p.isFull() << endl;
+
+	intPoly[4] = 3;
+	cout << "Is intPoly full coefficients? " << intPoly.isFull() << endl; 
+	
+	intPoly.makeFull();
+	cout << "After filling coeffs for intPoly: ";
+	intPoly.print();
+	
+	cout << intPoly.horner(2);
 
 	cin.get();
 	return 0;

@@ -1,21 +1,9 @@
 ﻿  main.cpp
-d:\programming\c++\cpp-polynomials\cpp-polynomials\polynomial.cpp(34): warning C4552: '>>': result of expression not used
-  d:\programming\c++\cpp-polynomials\cpp-polynomials\polynomial.cpp(63): note: see reference to function template instantiation 'ValC iter_pow<ValC>(ValC,unsigned int)' being compiled
-          with
-          [
-              ValC=int
-          ]
-  d:\programming\c++\cpp-polynomials\cpp-polynomials\polynomial.cpp(56): note: while compiling class template member function 'ValC Polynomial<int,ValC>::at(const ValC &) noexcept const'
-          with
-          [
-              ValC=int
-          ]
-  d:\programming\c++\cpp-polynomials\cpp-polynomials\main.cpp(15): note: see reference to function template instantiation 'ValC Polynomial<int,ValC>::at(const ValC &) noexcept const' being compiled
-          with
-          [
-              ValC=int
-          ]
-  d:\programming\c++\cpp-polynomials\cpp-polynomials\main.cpp(12): note: see reference to class template instantiation 'Polynomial<int,int>' being compiled
+d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(25): warning C4834: discarding return value of function with 'nodiscard' attribute
+  d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(18): note: while compiling class template member function 'bool Polynomial<double,double>::isFull(void) noexcept const'
+  d:\programming\github\cpp-polynomials\cpp-polynomials\main.cpp(28): note: see reference to function template instantiation 'bool Polynomial<double,double>::isFull(void) noexcept const' being compiled
+  d:\programming\github\cpp-polynomials\cpp-polynomials\main.cpp(9): note: see reference to class template instantiation 'Polynomial<double,double>' being compiled
+d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(27): warning C4101: 'noSuchPower': unreferenced local variable
   Polynomial.cpp
   Generating Code...
-  CPP-Polynomials.vcxproj -> D:\Programming\C++\CPP-Polynomials\x64\Debug\CPP-Polynomials.exe
+  CPP-Polynomials.vcxproj -> D:\Programming\GITHUB\CPP-Polynomials\x64\Debug\CPP-Polynomials.exe

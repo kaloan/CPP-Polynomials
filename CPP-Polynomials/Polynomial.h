@@ -12,6 +12,12 @@ public:
 	inline Polynomial();
 	inline Polynomial(const std::map<unsigned int, CoefC>&);
 
+	//Checks if it has coefficients for all powers
+	constexpr bool isFull() const noexcept;
+
+	//Inserts 0 coefficients for missing powers
+	constexpr void makeFull() noexcept;
+
 	inline std::map<unsigned int, CoefC> getCoeffs() const noexcept;
 
 	//Calls coeffs.at() and copies the value so may throw exception
@@ -19,6 +25,9 @@ public:
 
 	//Requires a unitary constructor for the ValC class that creates a unit when passed the int value 1
 	constexpr ValC at(const ValC&) const noexcept;
+
+	//Works only on polynomial with full coefficients
+	constexpr ValC horner(const ValC&) const noexcept;
 	void print() const noexcept;
 
 	inline constexpr CoefC& operator[](const unsigned int&);
