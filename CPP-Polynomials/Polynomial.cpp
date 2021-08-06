@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include <complex>
+#include <type_traits>
 
 template<class CoefC, class ValC>
 inline Polynomial<CoefC, ValC>::Polynomial()
@@ -70,7 +71,6 @@ ValC iter_pow(ValC base, unsigned int exponent)
 template<class CoefC, class ValC>
 inline constexpr CoefC Polynomial<CoefC, ValC>::coeffOfPow(const unsigned int& pow) const
 {
-	// TODO: insert return statement here
 	return coeffs.at(pow);
 }
 
@@ -83,7 +83,7 @@ constexpr ValC Polynomial<CoefC, ValC>::at(const ValC& atVal) const noexcept
 
 	for (const auto& monom : coeffs)
 	{
-		if constexpr (std::is_same<ValC, float>::value || std::is_same<ValC, double>::value || std::is_same<ValC, long double>::value || std::is_same<ValC, std::complex<float>>::value || std::is_same<ValC, std::complex<double>>::value || std::is_same<ValC, std::complex<long double>>::value)
+		if constexpr (std::is_floating_point_v<ValC> || std::is_same<ValC, std::complex<float>>::value || std::is_same<ValC, std::complex<double>>::value || std::is_same<ValC, std::complex<long double>>::value)
 		{
 			lastPowerValue = pow(atVal, monom.first - lastPow) * lastPowerValue;
 			res += monom.second * lastPowerValue;
@@ -125,7 +125,9 @@ constexpr ValC Polynomial<CoefC, ValC>::horner(const ValC &atVal) const noexcept
 	ValC res = coeffs.rbegin()->second;
 	for (auto monom = coeffs.rbegin(); monom->first != 0; )
 	{
-		res = atVal * res + (++monom)->second;
+		//Save a multiplication for the default arithmetics
+		if constexpr (std::is_arithmetic_v<ValC>) res = atVal * res + (++monom)->second;
+		else res = atVal * res + (++monom)->second * ValC(1);
 	}
 	
 	return res;
