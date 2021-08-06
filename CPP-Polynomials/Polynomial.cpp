@@ -1,6 +1,7 @@
 #include "Polynomial.h"
 #include <iostream>
 #include <math.h>
+#include <complex>
 
 template<class CoefC, class ValC>
 inline Polynomial<CoefC, ValC>::Polynomial()
@@ -77,13 +78,24 @@ template<class CoefC, class ValC>
 constexpr ValC Polynomial<CoefC, ValC>::at(const ValC& atVal) const noexcept
 {
 	ValC res = ValC();
-	//For optimisation:
-	//Can store last x^i and use it to quicken calculation for x^(i+j)
+	unsigned int lastPow = 0;
+	ValC lastPowerValue = ValC(1);
+
 	for (const auto& monom : coeffs)
 	{
-		if constexpr (std::is_same<ValC, float>::value || std::is_same<ValC, double>::value) res += monom.second * pow(atVal, monom.first);
-		else res += monom.second * iter_pow(atVal, monom.first);
+		if constexpr (std::is_same<ValC, float>::value || std::is_same<ValC, double>::value || std::is_same<ValC, long double>::value || std::is_same<ValC, std::complex<float>>::value || std::is_same<ValC, std::complex<double>>::value || std::is_same<ValC, std::complex<long double>>::value)
+		{
+			lastPowerValue = pow(atVal, monom.first - lastPow) * lastPowerValue;
+			res += monom.second * lastPowerValue;
+		}
+		else
+		{
+			lastPowerValue = iter_pow(atVal, monom.first - lastPow) * lastPowerValue;
+			res += monom.second * lastPowerValue;
+		}
+		lastPow = monom.first;
 	}
+
 	return res;
 }
 
@@ -95,6 +107,7 @@ constexpr ValC Polynomial<CoefC, ValC>::horner(const ValC &atVal) const noexcept
 	
 	//We utilise the fact that coeffs is an ordered map
 
+	/*
 	auto prevPower = coeffs.rbegin();
 	ValC res = prevPower->second;
 	++prevPower;
@@ -107,17 +120,14 @@ constexpr ValC Polynomial<CoefC, ValC>::horner(const ValC &atVal) const noexcept
 		monom = prevPower;
 		++prevPower;
 	}
-
-	//Probably better for types with quick != calculation
-	/*ValC res = coeffs.rbegin()->second;
-	for (auto monom = coeffs.rbegin(); *monom != *coeffs.begin(); )
-	{
-		//Not sure if the left one will be evaluated before the right one
-		//res = monom->second*res + (--monom)->second;
-		res = atVal * res + (++monom)->second;
-	}
 	*/
 
+	ValC res = coeffs.rbegin()->second;
+	for (auto monom = coeffs.rbegin(); monom->first != 0; )
+	{
+		res = atVal * res + (++monom)->second;
+	}
+	
 	return res;
 }
 

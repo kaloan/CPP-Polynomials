@@ -11,8 +11,8 @@ int main()
 	cout << p.at(1.0) << " " << p.at(50.0) << endl;
 
 	Polynomial<int, int> intPoly;
-	intPoly[1] = 4;
-	intPoly[2] = 2;
+	intPoly[2] = 4;
+	intPoly[5] = 2;
 	cout << intPoly.at(-2) << endl;
 
 	for (const auto& c : intPoly.getCoeffs())
@@ -46,7 +46,7 @@ int main()
 		myCos[i] = 1 / facts;
 		facts *= - (int)((i + 1) * (i + 2));
 	}
-	cout << "Build in cos: " << cos(1) << " vs my cos: " << myCos.at(1) << endl;
+	cout << "Built in cos: " << cos(1) << " vs my cos: " << myCos.at(1) << endl;
 
 	cin.get();
 	return 0;
