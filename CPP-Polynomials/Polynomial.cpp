@@ -5,14 +5,18 @@
 #include <type_traits>
 
 template<class CoefC, class ValC>
-inline Polynomial<CoefC, ValC>::Polynomial()
+inline Polynomial<CoefC, ValC>::Polynomial() noexcept
 {
 }
 
 template<class CoefC, class ValC>
-inline Polynomial<CoefC, ValC>::Polynomial(const std::map<unsigned int, CoefC>& givenCoeffs)
+inline Polynomial<CoefC, ValC>::Polynomial(const std::map<unsigned int, CoefC>& givenCoeffs) noexcept : coeffs(givenCoeffs)
 {
-	coeffs = givenCoeffs;
+}
+
+template<class CoefC, class ValC>
+inline Polynomial<CoefC, ValC>::Polynomial(const Polynomial &otherPolynomial) noexcept : coeffs(otherPolynomial.coeffs)
+{
 }
 
 template<class CoefC, class ValC>
@@ -45,7 +49,7 @@ constexpr void Polynomial<CoefC, ValC>::makeFull() noexcept
 }
 
 template<class CoefC, class ValC>
-inline std::map<unsigned int, CoefC> Polynomial<CoefC, ValC>::getCoeffs() const noexcept
+inline constexpr std::map<unsigned int, CoefC> Polynomial<CoefC, ValC>::getCoeffs() const noexcept
 {
 	return std::map<unsigned int, CoefC>(coeffs);
 }
@@ -73,6 +77,7 @@ inline constexpr CoefC Polynomial<CoefC, ValC>::coeffOfPow(const unsigned int& p
 {
 	return coeffs.at(pow);
 }
+
 
 template<class CoefC, class ValC>
 constexpr ValC Polynomial<CoefC, ValC>::at(const ValC& atVal) const noexcept
@@ -152,4 +157,75 @@ template<class CoefC, class ValC>
 inline constexpr CoefC & Polynomial<CoefC, ValC>::operator[](const unsigned int &pow)
 {
 	return coeffs[pow];
+}
+
+template<class CoefC, class ValC>
+Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
+{
+	if (this != &otherPolynomial) coeffs = otherPolynomial.coeffs;
+	return *this;
+}
+
+template<class CoefC, class ValC>
+Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator=(Polynomial<CoefC, ValC>&& otherPolynomial) noexcept
+{
+	coeffs = std::move(otherPolynomial.coeffs);
+	return *this;
+}
+
+template<class CoefC, class ValC>
+Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator+(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+{
+	Polynomial<CoefC, ValC> res = *this;
+	//Use [] on the coeffs, because we defined Polynomial[] by coeffs.at()
+	for (auto& monom : otherPolynomial.coeffs) res.coeffs[monom.first] += monom.second;
+	return res;
+}
+
+template<class CoefC, class ValC>
+Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator*(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+{
+	std::map<unsigned int, ValC> resMap;
+
+	for (auto& thisMonom : this->coeffs)
+	{
+		for (auto& otherMonom : otherPolynomial.coeffs)
+		{
+			resMap[thisMonom.first+otherMonom.first] += thisMonom.second*otherMonom.second;
+		}
+	}
+
+	return Polynomial<CoefC, ValC>(resMap);
+}
+
+template<class CoefC, class ValC>
+Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator+=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
+{
+	*this = std::move(*this + otherPolynomial);
+	return *this;
+}
+
+template<class CoefC, class ValC>
+Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator*=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
+{
+	*this = std::move(*this * otherPolynomial);
+	return *this;
+}
+
+template<class CoefC, class ValC>
+constexpr bool Polynomial<CoefC, ValC>::operator==(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+{
+	if (this == &otherPolynomial) return true;
+	return (coeffs == otherPolynomial.coeffs);
+}
+
+template<class CoefC, class ValC>
+constexpr bool Polynomial<CoefC, ValC>::operator<(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+{
+	if (coeffs.empty()) return false;
+	else if (otherPolynomial.coeffs.empty()) return true;
+
+	unsigned int thisMaxPower = coeffs.rbegin()->first;
+	unsigned int otherMaxPower = otherPolynomial.coeffs.rbegin()->first;
+	return (thisMaxPower < otherMaxPower) || (thisMaxPower == otherMaxPower && coeffs.at(thisMaxPower) < otherPolynomial.coeffs.at(otherMaxPower));
 }

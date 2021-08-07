@@ -48,6 +48,30 @@ int main()
 	}
 	cout << "Built in cos: " << cos(1) << " vs my cos: " << myCos.at(1) << endl;
 
+
+	
+	map<unsigned int, double> initProd;
+	for (auto& monom : intPoly.getCoeffs())
+	{
+		initProd[monom.first] = static_cast<double>(monom.second);
+	}
+	Polynomial<double, double> doubleIntPoly(initProd);
+	Polynomial<double, double> prod;
+	prod = p * doubleIntPoly;
+
+	cout << "The product of p and intPoly is: ";
+	prod.print();
+
+	cout << "Is the product equal to p?: " << (p == prod) << endl;
+	cout << "Does p equal itself? " << (p == p) << endl;
+	cout << "Does prod grow quicker than p? " << (p < prod) << endl;
+
+	cout << "The sum of p and intPoly is: ";
+	(p + doubleIntPoly).print();
+	doubleIntPoly += p;
+	doubleIntPoly.print();
+
+
 	cin.get();
 	return 0;
 }
