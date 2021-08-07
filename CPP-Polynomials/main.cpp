@@ -71,6 +71,21 @@ int main()
 	doubleIntPoly += p;
 	doubleIntPoly.print();
 
+	cout << "Negative p is equal to: ";
+	(-p).print();
+
+	//Results in compiler error and doesn't even throw exception
+	/*Polynomial<string, int> showThrow;
+	showThrow[4] = 15;
+	showThrow[20] = 2;
+	try
+	{
+		showThrow = -showThrow;
+	}
+	catch (domain_error& probWithCoeffType)
+	{
+		cout << probWithCoeffType.what() << endl;
+	}*/
 
 	cin.get();
 	return 0;

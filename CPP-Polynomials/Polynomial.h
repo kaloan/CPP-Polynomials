@@ -37,9 +37,11 @@ public:
 	Polynomial<CoefC, ValC>& operator=(const Polynomial<CoefC, ValC>&) noexcept;
 	Polynomial<CoefC, ValC>& operator=(Polynomial<CoefC, ValC>&&) noexcept;
 	Polynomial<CoefC, ValC> operator+(const Polynomial<CoefC, ValC>&) const noexcept;
+	Polynomial<CoefC, ValC> operator-(const Polynomial<CoefC, ValC>&) const noexcept;
 	Polynomial<CoefC, ValC> operator*(const Polynomial<CoefC, ValC>&) const noexcept;
 	Polynomial<CoefC, ValC>& operator+=(const Polynomial<CoefC, ValC>&) noexcept;
 	Polynomial<CoefC, ValC>& operator*=(const Polynomial<CoefC, ValC>&) noexcept;
+	Polynomial<CoefC, ValC>& operator-();
 
 	constexpr bool operator==(const Polynomial<CoefC, ValC>&) const noexcept;
 	constexpr bool operator<(const Polynomial<CoefC, ValC>&) const noexcept;

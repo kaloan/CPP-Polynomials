@@ -183,6 +183,15 @@ Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator+(const Polynomial<Coef
 }
 
 template<class CoefC, class ValC>
+Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator-(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+{
+	Polynomial<CoefC, ValC> res = *this;
+	//Use [] on the coeffs, because we defined Polynomial[] by coeffs.at()
+	for (auto& monom : otherPolynomial.coeffs) res.coeffs[monom.first] -= monom.second;
+	return res;
+}
+
+template<class CoefC, class ValC>
 Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator*(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
 {
 	std::map<unsigned int, ValC> resMap;
@@ -209,6 +218,23 @@ template<class CoefC, class ValC>
 Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator*=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
 {
 	*this = std::move(*this * otherPolynomial);
+	return *this;
+}
+
+template<class CoefC, class ValC>
+Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator-()
+{
+	try
+	{
+		for (auto& monom : coeffs)
+		{
+			coeffs[monom.first] = -coeffs[monom.first];
+		}
+	}
+	catch (const std::exception& unsignedException)
+	{
+		throw std::domain_error("Cannot change sign of unsigned coefficients or undeclared unary- for coefficient type.");
+	}
 	return *this;
 }
 
