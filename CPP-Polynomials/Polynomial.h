@@ -12,6 +12,7 @@ public:
 	inline Polynomial() noexcept;
 	inline Polynomial(const std::map<unsigned int, CoefC>&) noexcept;
 	inline Polynomial(const Polynomial&) noexcept;
+	inline Polynomial(Polynomial&&) noexcept;
 
 	//Checks if it has coefficients for all powers
 	constexpr bool isFull() const noexcept;

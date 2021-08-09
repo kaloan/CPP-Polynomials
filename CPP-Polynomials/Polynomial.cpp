@@ -20,6 +20,11 @@ inline Polynomial<CoefC, ValC>::Polynomial(const Polynomial &otherPolynomial) no
 }
 
 template<class CoefC, class ValC>
+inline Polynomial<CoefC, ValC>::Polynomial(Polynomial &&otherPolynomial) noexcept : coeffs(std::move(otherPolynomial.coeffs))
+{
+}
+
+template<class CoefC, class ValC>
 constexpr bool Polynomial<CoefC, ValC>::isFull() const noexcept
 {
 	if (!coeffs.size()) return true;
@@ -128,11 +133,12 @@ constexpr ValC Polynomial<CoefC, ValC>::horner(const ValC &atVal) const noexcept
 	*/
 
 	ValC res = coeffs.rbegin()->second;
+	ValC unit = ValC(1);
 	for (auto monom = coeffs.rbegin(); monom->first != 0; )
 	{
 		//Save a multiplication for the default arithmetics
 		if constexpr (std::is_arithmetic_v<ValC>) res = atVal * res + (++monom)->second;
-		else res = atVal * res + (++monom)->second * ValC(1);
+		else res = atVal * res + (++monom)->second * unit;
 	}
 	
 	return res;
