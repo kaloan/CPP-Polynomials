@@ -5,17 +5,17 @@
 #include <type_traits>
 
 template<class CoefC, class ValC>
-inline Polynomial<CoefC, ValC>::Polynomial() noexcept
+inline constexpr Polynomial<CoefC, ValC>::Polynomial() noexcept
 {
 }
 
 template<class CoefC, class ValC>
-inline Polynomial<CoefC, ValC>::Polynomial(const std::map<unsigned int, CoefC>& givenCoeffs) noexcept : coeffs(givenCoeffs)
+inline constexpr Polynomial<CoefC, ValC>::Polynomial(const std::map<unsigned int, CoefC>& givenCoeffs) noexcept : coeffs(givenCoeffs)
 {
 }
 
 template<class CoefC, class ValC>
-inline Polynomial<CoefC, ValC>::Polynomial(const Polynomial &otherPolynomial) noexcept : coeffs(otherPolynomial.coeffs)
+inline constexpr Polynomial<CoefC, ValC>::Polynomial(const Polynomial &otherPolynomial) noexcept : coeffs(otherPolynomial.coeffs)
 {
 }
 
@@ -160,13 +160,13 @@ void Polynomial<CoefC, ValC>::print() const noexcept
 }
 
 template<class CoefC, class ValC>
-inline constexpr CoefC & Polynomial<CoefC, ValC>::operator[](const unsigned int &pow)
+inline constexpr CoefC& Polynomial<CoefC, ValC>::operator[](const unsigned int &pow) noexcept
 {
 	return coeffs[pow];
 }
 
 template<class CoefC, class ValC>
-Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
+constexpr Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
 {
 	if (this != &otherPolynomial) coeffs = otherPolynomial.coeffs;
 	return *this;
@@ -180,7 +180,7 @@ Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator=(Polynomial<CoefC, Va
 }
 
 template<class CoefC, class ValC>
-Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator+(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+constexpr Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator+(const Polynomial<CoefC, ValC>& otherPolynomial) const
 {
 	Polynomial<CoefC, ValC> res = *this;
 	//Use [] on the coeffs, because we defined Polynomial[] by coeffs.at()
@@ -189,7 +189,7 @@ Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator+(const Polynomial<Coef
 }
 
 template<class CoefC, class ValC>
-Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator-(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+constexpr Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator-(const Polynomial<CoefC, ValC>& otherPolynomial) const
 {
 	Polynomial<CoefC, ValC> res = *this;
 	//Use [] on the coeffs, because we defined Polynomial[] by coeffs.at()
@@ -198,7 +198,7 @@ Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator-(const Polynomial<Coef
 }
 
 template<class CoefC, class ValC>
-Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator*(const Polynomial<CoefC, ValC>& otherPolynomial) const noexcept
+constexpr Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator*(const Polynomial<CoefC, ValC>& otherPolynomial) const
 {
 	std::map<unsigned int, ValC> resMap;
 
@@ -214,34 +214,28 @@ Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator*(const Polynomial<Coef
 }
 
 template<class CoefC, class ValC>
-Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator+=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
+constexpr Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator+=(const Polynomial<CoefC, ValC>& otherPolynomial)
 {
 	*this = std::move(*this + otherPolynomial);
 	return *this;
 }
 
 template<class CoefC, class ValC>
-Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator*=(const Polynomial<CoefC, ValC>& otherPolynomial) noexcept
+constexpr Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator*=(const Polynomial<CoefC, ValC>& otherPolynomial)
 {
 	*this = std::move(*this * otherPolynomial);
 	return *this;
 }
 
 template<class CoefC, class ValC>
-Polynomial<CoefC, ValC>& Polynomial<CoefC, ValC>::operator-()
+constexpr Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator-() const
 {
-	try
+	Polynomial<CoefC, ValC> res = *this;
+	for (auto& monom : coeffs)
 	{
-		for (auto& monom : coeffs)
-		{
-			coeffs[monom.first] = -coeffs[monom.first];
-		}
+		res.coeffs[monom.first] = -res.coeffs[monom.first];
 	}
-	catch (const std::exception& unsignedException)
-	{
-		throw std::domain_error("Cannot change sign of unsigned coefficients or undeclared unary- for coefficient type.");
-	}
-	return *this;
+	return res;
 }
 
 template<class CoefC, class ValC>

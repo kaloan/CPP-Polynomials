@@ -1,16 +1,13 @@
 ﻿  Polynomial.cpp
   main.cpp
-d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(31): warning C4834: discarding return value of function with 'nodiscard' attribute
-  d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(24): note: while compiling class template member function 'bool Polynomial<double,double>::isFull(void) noexcept const'
+d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(36): warning C4834: discarding return value of function with 'nodiscard' attribute
+  d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(29): note: while compiling class template member function 'bool Polynomial<double,double>::isFull(void) noexcept const'
   d:\programming\github\cpp-polynomials\cpp-polynomials\main.cpp(29): note: see reference to function template instantiation 'bool Polynomial<double,double>::isFull(void) noexcept const' being compiled
   d:\programming\github\cpp-polynomials\cpp-polynomials\main.cpp(10): note: see reference to class template instantiation 'Polynomial<double,double>' being compiled
-d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(33): warning C4101: 'noSuchPower': unreferenced local variable
-d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(234): warning C4101: 'unsignedException': unreferenced local variable
-  d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(226): note: while compiling class template member function 'Polynomial<double,double> &Polynomial<double,double>::operator -(void)'
-  d:\programming\github\cpp-polynomials\cpp-polynomials\main.cpp(75): note: see reference to function template instantiation 'Polynomial<double,double> &Polynomial<double,double>::operator -(void)' being compiled
+d:\programming\github\cpp-polynomials\cpp-polynomials\polynomial.cpp(38): warning C4101: 'noSuchPower': unreferenced local variable
   Generating code
-  99 of 427 functions (23.2%) were compiled, the rest were copied from previous compilation.
-    74 functions were new in current compilation
-    53 functions had inline decision re-evaluated but remain unchanged
+  23 of 411 functions ( 5.6%) were compiled, the rest were copied from previous compilation.
+    4 functions were new in current compilation
+    49 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   CPP-Polynomials.vcxproj -> D:\Programming\GITHUB\CPP-Polynomials\Release\CPP-Polynomials.exe

@@ -87,6 +87,18 @@ int main()
 		cout << probWithCoeffType.what() << endl;
 	}*/
 
+	/*
+	Polynomial<double, double> tryIO;
+	double pow1, val1, pow2, val2;
+	cin >> pow1 >> val1 >> pow2 >> val2;
+	tryIO[pow1] = val1;
+	tryIO[pow2] = val2;
+	tryIO.print();
+
+	(tryIO + p).print();
+	*/
+
+
 	cin.get();
 	return 0;
 }

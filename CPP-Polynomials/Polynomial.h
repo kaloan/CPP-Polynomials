@@ -9,9 +9,9 @@ private:
 	std::map<unsigned int, CoefC> coeffs;
 
 public:
-	inline Polynomial() noexcept;
-	inline Polynomial(const std::map<unsigned int, CoefC>&) noexcept;
-	inline Polynomial(const Polynomial&) noexcept;
+	inline constexpr Polynomial() noexcept;
+	inline constexpr Polynomial(const std::map<unsigned int, CoefC>&) noexcept;
+	inline constexpr Polynomial(const Polynomial&) noexcept;
 	inline Polynomial(Polynomial&&) noexcept;
 
 	//Checks if it has coefficients for all powers
@@ -33,16 +33,16 @@ public:
 
 	void print() const noexcept;
 
-	inline constexpr CoefC& operator[](const unsigned int&);
+	inline constexpr CoefC& operator[](const unsigned int&) noexcept;
 
-	Polynomial<CoefC, ValC>& operator=(const Polynomial<CoefC, ValC>&) noexcept;
+	constexpr Polynomial<CoefC, ValC>& operator=(const Polynomial<CoefC, ValC>&) noexcept;
 	Polynomial<CoefC, ValC>& operator=(Polynomial<CoefC, ValC>&&) noexcept;
-	Polynomial<CoefC, ValC> operator+(const Polynomial<CoefC, ValC>&) const noexcept;
-	Polynomial<CoefC, ValC> operator-(const Polynomial<CoefC, ValC>&) const noexcept;
-	Polynomial<CoefC, ValC> operator*(const Polynomial<CoefC, ValC>&) const noexcept;
-	Polynomial<CoefC, ValC>& operator+=(const Polynomial<CoefC, ValC>&) noexcept;
-	Polynomial<CoefC, ValC>& operator*=(const Polynomial<CoefC, ValC>&) noexcept;
-	Polynomial<CoefC, ValC>& operator-();
+	constexpr Polynomial<CoefC, ValC> operator+(const Polynomial<CoefC, ValC>&) const;
+	constexpr Polynomial<CoefC, ValC> operator-(const Polynomial<CoefC, ValC>&) const;
+	constexpr Polynomial<CoefC, ValC> operator*(const Polynomial<CoefC, ValC>&) const;
+	constexpr Polynomial<CoefC, ValC>& operator+=(const Polynomial<CoefC, ValC>&);
+	constexpr Polynomial<CoefC, ValC>& operator*=(const Polynomial<CoefC, ValC>&);
+	constexpr Polynomial<CoefC, ValC> operator-() const;
 
 	constexpr bool operator==(const Polynomial<CoefC, ValC>&) const noexcept;
 	constexpr bool operator<(const Polynomial<CoefC, ValC>&) const noexcept;
