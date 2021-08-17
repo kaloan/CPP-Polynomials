@@ -1,0 +1,9 @@
+*
+*/
+.vs
+!.gitattributes
+!.gitignore
+!readme.md
+!.gitkeep
+!CPP-Polynomials/*.cpp
+!CPP-Polynomials/*.h
