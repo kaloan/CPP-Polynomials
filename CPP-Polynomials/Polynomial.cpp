@@ -15,6 +15,12 @@ inline constexpr Polynomial<CoefC, ValC>::Polynomial(const std::map<unsigned int
 }
 
 template<class CoefC, class ValC>
+inline constexpr Polynomial<CoefC, ValC>::Polynomial(const ValC &givenVal) noexcept
+{
+	coeffs[0] = givenVal;
+}
+
+template<class CoefC, class ValC>
 inline constexpr Polynomial<CoefC, ValC>::Polynomial(const Polynomial &otherPolynomial) noexcept : coeffs(otherPolynomial.coeffs)
 {
 }
@@ -95,6 +101,7 @@ constexpr ValC Polynomial<CoefC, ValC>::at(const ValC& atVal) const noexcept
 	{
 		if constexpr (std::is_floating_point_v<ValC> || std::is_same<ValC, std::complex<float>>::value || std::is_same<ValC, std::complex<double>>::value || std::is_same<ValC, std::complex<long double>>::value)
 		{
+			//Does memoization even save time in this case?
 			lastPowerValue = pow(atVal, monom.first - lastPow) * lastPowerValue;
 			res += monom.second * lastPowerValue;
 		}
@@ -183,7 +190,6 @@ template<class CoefC, class ValC>
 constexpr Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator+(const Polynomial<CoefC, ValC>& otherPolynomial) const
 {
 	Polynomial<CoefC, ValC> res = *this;
-	//Use [] on the coeffs, because we defined Polynomial[] by coeffs.at()
 	for (auto& monom : otherPolynomial.coeffs) res.coeffs[monom.first] += monom.second;
 	return res;
 }
@@ -192,7 +198,6 @@ template<class CoefC, class ValC>
 constexpr Polynomial<CoefC, ValC> Polynomial<CoefC, ValC>::operator-(const Polynomial<CoefC, ValC>& otherPolynomial) const
 {
 	Polynomial<CoefC, ValC> res = *this;
-	//Use [] on the coeffs, because we defined Polynomial[] by coeffs.at()
 	for (auto& monom : otherPolynomial.coeffs) res.coeffs[monom.first] -= monom.second;
 	return res;
 }

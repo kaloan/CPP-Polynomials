@@ -11,6 +11,7 @@ private:
 public:
 	inline constexpr Polynomial() noexcept;
 	inline constexpr Polynomial(const std::map<unsigned int, CoefC>&) noexcept;
+	inline constexpr Polynomial(const ValC&) noexcept;
 	inline constexpr Polynomial(const Polynomial&) noexcept;
 	inline Polynomial(Polynomial&&) noexcept;
 
